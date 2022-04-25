@@ -24,18 +24,38 @@
 
 ;*****************************************************************************************************************************************
 ; Hotkey
-;*****************************************************************************************************************************************
+;*****************************************************************************************************************************************    
 
-    #If gFLB
+    #If checkOnDesktop() & !rlb
 
-        *LButton Up::
-            vTime := LONG_PRESS_DELAY * 1000
-            If (A_TimeSincePriorHotkey < vTime) & (A_PriorHotkey == "*RButton Up") {
-                moveMPoseNextMonitor()
+        *RButton::
+            KeyFlag.RB := True
+            KeyWait, RButton, T%LONG_PRESS_DELAY%
+            If (!ErrorLevel) & (A_PriorKey = "RButton") {
+                Send, {Blind}{RButton}
             }
-            gFLB := False
+            KeyWait, RButton
+            KeyFlag.RB := False
         Return
 
-    #If gFRB & !gFLB
+    #If KeyFlag.RB & !rlb
 
-        *LButton::gFLB := True
+        *LButton::
+            KeyFlag.LB := True
+        Return
+
+        *WheelDown::WheelRight
+        *WheelUp::WheelLeft
+    
+    #If KeyFlag.LB & !rlb
+
+        *LButton Up::
+            KeyWait, LButton, T%LONG_PRESS_DELAY%
+            If (!ErrorLevel)
+                & (A_PriorHotkey = "*LButton")
+                & (A_TimeSincePriorHotkey < (LONG_PRESS_DELAY * 1000))
+                & !KeyFlag.RB {
+                moveMPoseNextMonitor()
+            }
+            KeyFlag.LB := False
+        Return

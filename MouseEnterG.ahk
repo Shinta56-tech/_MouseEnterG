@@ -2,23 +2,23 @@
 ; Standard Setting
 ;*****************************************************************************************************************************************
 
-#Persistent
-#SingleInstance, Force
-#NoEnv
-#UseHook
-#InstallKeybdHook
-#InstallMouseHook
-#HotkeyInterval, 2000
-#MaxHotkeysPerInterval, 200
+    #Persistent
+    #SingleInstance, IGNORE
+    #NoEnv
+    #UseHook
+    #InstallKeybdHook
+    #InstallMouseHook
+    #HotkeyInterval, 2000
+    #MaxHotkeysPerInterval, 200
 
-Process, Priority, , Realtime
-SendMode, Input
-SetWorkingDir %A_ScriptDir%
-SetTitleMatchMode, 2
-SetMouseDelay -1
-SetKeyDelay, -1
-SetBatchLines, -1
-CoordMode, Mouse, Screen
+    Process, Priority, , Realtime
+    SendMode, Input
+    SetWorkingDir %A_ScriptDir%
+    SetTitleMatchMode, 2
+    SetMouseDelay -1
+    SetKeyDelay, -1
+    SetBatchLines, -1
+    CoordMode, Mouse, Screen
 
 ;*****************************************************************************************************************************************
 ; Const
@@ -27,8 +27,35 @@ CoordMode, Mouse, Screen
     Global DIR_AHK := RegExReplace(A_AhkPath, "[^\\]+?$")
     Global LONG_PRESS_DELAY := 0.2
     Global DUBL_CLICK_DELAY := 250
+    Global KeyFlag := Object()
 
-    Gosub, MouseTyping
+;*****************************************************************************************************************************************
+; Init
+;*****************************************************************************************************************************************
+
+    Gosub, MouseApp
+
+    Return
+
+;*****************************************************************************************************************************************
+; Function
+;*****************************************************************************************************************************************
+
+    ; Check Mouse-Typing Desktop
+    checkOnDesktop() {
+        vIni := "ini\NoDesktop.ini"
+        WinGetClass, vAhkClass, A
+        IniRead, vResultClass, %vIni%, AhkClass, %vAhkClass%
+        If (vResultClass <> "ERROR") {
+            Return False
+        }
+        WinGet, vAhkExe, ProcessName, A
+        IniRead, vResultExe, %vIni%, AhkExe, %vAhkExe%
+        If (vResultExe <> "ERROR") {
+            Return False
+        }
+        Return True
+    }
 
 ;*****************************************************************************************************************************************
 ; Default Hotkey
@@ -39,13 +66,8 @@ CoordMode, Mouse, Screen
     ^!Escape::ExitApp
 
 ;*****************************************************************************************************************************************
-; Initialize
-;*****************************************************************************************************************************************
-
-    Return
-
-;*****************************************************************************************************************************************
 ; Include
 ;*****************************************************************************************************************************************
 
-#Include include\MouseTyping\MouseTyping_main.ahk
+    #Include include\MouseTyping\MouseTyping_main.ahk
+    #Include include\MouseApp\MouseApp_main.ahk
