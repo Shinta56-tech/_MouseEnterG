@@ -25,6 +25,7 @@
 ;*****************************************************************************************************************************************
 
     Global DIR_AHK := RegExReplace(A_AhkPath, "[^\\]+?$")
+    Global INI_PROP := "ini\Property.ini"
     Global LONG_PRESS_DELAY := 0.2
     Global DUBL_CLICK_DELAY := 250
     Global KeyFlag := Object()
@@ -32,9 +33,16 @@
 ;*****************************************************************************************************************************************
 ; Init
 ;*****************************************************************************************************************************************
-
+    
+    Gosub, Init
     Gosub, MouseApp
+    Gosub, MouseGesture
 
+    Return
+
+    Init:
+        IniRead, LONG_PRESS_DELAY, %INI_PROP%, PROP, LONG_PRESS_DELAY
+        IniRead, DUBL_CLICK_DELAY, %INI_PROP%, PROP, DUBL_CLICK_DELAY
     Return
 
 ;*****************************************************************************************************************************************
@@ -71,3 +79,4 @@
 
     #Include include\MouseTyping\MouseTyping_main.ahk
     #Include include\MouseApp\MouseApp_main.ahk
+    #Include include\MouseGesture\MouseGesture_main.ahk

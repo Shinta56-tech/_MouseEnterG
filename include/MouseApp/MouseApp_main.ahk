@@ -79,7 +79,7 @@
 
         #If !checkOnDesktop() & GetKeyState("XButton1", "P") & GetKeyState("XButton2", "P") & GetKeyState("LShift", "P")
 
-            1::Return
+            1::showGuiHS()
             2::Return
             3::Return
             4::Return

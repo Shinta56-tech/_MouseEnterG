@@ -34,14 +34,16 @@
             If (!ErrorLevel) & (A_PriorKey = "RButton") {
                 Send, {Blind}{RButton}
             }
-            KeyWait, RButton
-            KeyFlag.RB := False
         Return
 
     #If KeyFlag.RB & !rlb
 
         *LButton::
             KeyFlag.LB := True
+        Return
+
+        *RButton Up::
+            KeyFlag.RB := False
         Return
 
         *WheelDown::WheelRight
