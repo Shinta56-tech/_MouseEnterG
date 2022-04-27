@@ -71,7 +71,7 @@
             v::executeMouseApp()
             b::executeMouseApp()
 
-            1::showGuiHS()
+            1::showHotStringGui()
             2::Return
             3::Return
             4::Return
@@ -79,7 +79,7 @@
 
         #If !checkOnDesktop() & GetKeyState("XButton1", "P") & GetKeyState("XButton2", "P") & GetKeyState("LShift", "P")
 
-            1::showGuiHS()
+            1::showHotStringGui()
             2::Return
             3::Return
             4::Return

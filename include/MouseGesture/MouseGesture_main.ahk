@@ -5,6 +5,7 @@
     MouseGesture:
         Global INI_MouseGesture := "ini\MouseGesture.ini"
         Global DIR_PROFILE := "ini\profile\"
+        Global MG_SPLIT_TEXT := "\|\|"
         Global MouseGes := Object()
         IniRead, HOTKEY_START, %INI_MouseGesture%, SETTING, HOTKEY_START
         IniRead, HOTKEY_END, %INI_MouseGesture%, SETTING, HOTKEY_END
@@ -21,6 +22,8 @@
         MouseGes.MoveL := "'L"
         MouseGes.MoveD := "'D"
         MouseGes.MoveU := "'U"
+
+        Gosub, MouseGestureGui
     Return
 
 ;*****************************************************************************************************************************************
@@ -89,7 +92,7 @@
         vKey := vGesText
         IniRead, vValue, %vIni%, HotKey, %vKey%
         If (vValue<>"ERROR") {
-            RegExMatch(vValue, "^(.*?)::(.*?)$", elem)
+            RegExMatch(vValue, "^(.*?)" MG_SPLIT_TEXT "(.*?)$", elem)
             MouseGes.Send := elem1
             MouseGes.Name := elem2
             Return
@@ -110,7 +113,7 @@
         vKey := vGesText
         IniRead, vValue, %vIni%, HotKey, %vKey%
         If (vValue<>"ERROR") {
-            RegExMatch(vValue, "^(.*?)::(.*?)$", elem)
+            RegExMatch(vValue, "^(.*?)" MG_SPLIT_TEXT "(.*?)$", elem)
             MouseGes.Send := elem1
             MouseGes.Name := elem2
             Return
@@ -226,3 +229,5 @@
 ;*****************************************************************************************************************************************
 ; Include
 ;*****************************************************************************************************************************************
+
+    #Include include\MouseGesture\MouseGesture-Gui.ahk
