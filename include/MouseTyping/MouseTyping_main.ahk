@@ -2,7 +2,7 @@
 ; Hotkey
 ;*****************************************************************************************************************************************
 
-    #If checkOnDesktop() & !mt
+    #If checkOnDesktop() & !KeyFlag.RB & !KeyFlag.LB
     
        *CapsLock::BackSpace
        *vkF0::BackSpace
