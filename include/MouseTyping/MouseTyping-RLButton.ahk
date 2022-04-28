@@ -54,10 +54,10 @@
         *LButton Up::
             KeyWait, LButton, T%LONG_PRESS_DELAY%
             If (!ErrorLevel)
-                & (A_PriorHotkey = "*LButton")
+                & (A_PriorHotkey = "**RButton Up")
                 & (A_TimeSincePriorHotkey < (LONG_PRESS_DELAY * 1000))
                 & !KeyFlag.RB {
-                moveMPoseNextMonitor()
+                    moveMPoseNextMonitor()
             }
             KeyFlag.LB := False
         Return
